@@ -1,4 +1,4 @@
-name: CI - Build & Dockerize .NET App
+name: CI - Build & Push Docker Image to ACR
 
 on:
   push:
@@ -31,4 +31,21 @@ jobs:
       - name: Build Docker image
         run: |
           cd app/ReferenceApi
-          docker build -t reference-api:ci .
+          docker build -t reference-api:${{ github.sha }} .
+
+      #Login to ACR (ADMIN USER METHOD)
+      - name: Docker login to ACR
+        run: |
+          echo "${{ secrets.ACR_PASSWORD }}" | docker login \
+            ${{ secrets.ACR_LOGIN_SERVER }} \
+            -u ${{ secrets.ACR_USERNAME }} \
+            --password-stdin
+
+      #Tag & push image
+      - name: Push Docker image to ACR
+        run: |
+          docker tag reference-api:${{ github.sha }} \
+            ${{ secrets.ACR_LOGIN_SERVER }}/reference-api:${{ github.sha }}
+
+          docker push \
+            ${{ secrets.ACR_LOGIN_SERVER }}/reference-api:${{ github.sha }}
