@@ -38,7 +38,7 @@ app.MapGet("/weatherforecast", () =>
 
 app.MapGet("/health", () => Results.Ok(new
 {
-    status = "UP",
+    status = "UP - deployed via CI/CD",
     service = "ReferenceApi",
     timestamp = DateTime.UtcNow
 }));
