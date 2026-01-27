@@ -1,0 +1,7 @@
+resource_group    = "rg-devops-ci"
+location          = "West Europe"
+image_name        = "reference-api"
+image_tag         = "latest"
+acr_login_server  = "referenceacr123.azurecr.io"
+acr_username      = "referenceacr123"
+acr_password      = "y0dQN8/nqSvYa+o47ChrNCed/rxGmIa1/+bvyCALW1+ACRAgx3fn"
